@@ -20,7 +20,7 @@ const getMerchants = () => {
             if (error) {
                 reject(error)
             }
-            console.log("Results are ==> ",results.rows)
+            console.log("Results are ==> ", results.rows)
             resolve(results.rows);
         })
     })
@@ -40,7 +40,8 @@ const createMerchant = (body) => {
 const deleteMerchant = () => {
     return new Promise(function (resolve, reject) {
         const id = parseInt(request.params.id)
-        pool.query('DELETE FROM merchants WHERE id = $1', [id], (error, results) => {
+        pool.query(`DELETE FROM merchants WHERE id = ${id}`, [id], (error, results) => {
+            console.log("Results are after delete ==> ", results.rows)
             if (error) {
                 reject(error)
             }
