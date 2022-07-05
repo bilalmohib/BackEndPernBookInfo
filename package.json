@@ -1,0 +1,29 @@
+{
+  "name": "backendperntodo",
+  "version": "1.0.0",
+  "description": "This is the backend of the todo app made by materialui,pern stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muhammad-Bilal-7896/TodoAppPern-BackEnd.git"
+  },
+  "keywords": [
+    "pernstack",
+    "reactjs",
+    "materialui",
+    "webdev",
+    "nodejs",
+    "express",
+    "todo",
+    "crud"
+  ],
+  "author": "Muhammad-Bilal-7896",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Muhammad-Bilal-7896/TodoAppPern-BackEnd/issues"
+  },
+  "homepage": "https://github.com/Muhammad-Bilal-7896/TodoAppPern-BackEnd#readme"
+}
