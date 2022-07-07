@@ -198,6 +198,100 @@ app.delete("/student/:id", async (req, res) => {
 // #############################Developed By: Muhammad-Bilal-7896##########################
 // ########################################################################################
 
+
+// ########################################################################################
+// ########################################################################################
+// ##################################### TABLE @ book ##################################
+// #############################Developed By: Muhammad-Bilal-7896##########################
+// ########################################################################################
+
+//To get all data from book table
+app.get("/book", async (req, res) => {
+    const book = await pool.
+        query("SELECT * FROM book ORDER BY id ASC")
+        .then((results) => {
+            return results.rows;
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(200).json(book);
+});
+
+//To get specific book with given id
+app.get("/book/:id", async (req, res) => {
+    const id = req.params.id;
+    const book = await pool
+        .query("SELECT * FROM book WHERE id = $1", [id])
+        .then((results) => {
+            return results.rows[0];
+        }).catch(err => {
+            console.log(err);
+        });
+    console.log(`Book With Particular Id=${id} ==>`);
+    console.log(book);
+    if (book) {
+        res.status(200).json(book);
+    } else {
+        res.status(404).json({ message: "Book Not Found" });
+    }
+});
+//To get specific book with given id
+
+//To post a book data
+app.post("/book", async (req, res) => {
+    const { book_name, author, borrowed_by, borrowed_date, return_date } = req.body;
+    const book = await pool
+        .query("INSERT INTO book (book_name, author, borrowed_by, borrowed_date, return_date) VALUES ($1, $2, $3, $4, $5) RETURNING *", //RETURNING * is used to return the inserted row
+            [book_name, author, borrowed_by, borrowed_date, return_date])
+        .then((results) => {
+            return results.rows;
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(201).send(`Book Added Successfully with Name=${book_name}`);
+    res.end();
+});
+//To post a book data
+
+//Update a book data with a specify id
+app.put("/book/:id", async (req, res) => {
+    const id = req.params.id;
+    const { book_name, author, borrowed_by, borrowed_date, return_date } = req.body;
+    const book = await pool
+        .query("UPDATE todo SET book_name = $1, author = $2, borrowed_by = $3, borrowed_date = $4, return_date = $5 WHERE id = $6 RETURNING *",
+            [book_name, author, borrowed_by, borrowed_date, return_date, id])
+        .then((results) => {
+            console.log(`After Updating Book with id=${id}`, results.rows);
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(200).send(`Book Updated Successfully With Id=${id}`);
+    // res.end();
+});
+//Update a book data with a specify id
+
+//Delete a book RECORD WITH GIVEN ID
+app.delete("/book/:id", async (req, res) => {
+    const id = req.params.id;
+    const book = await pool
+        .query("DELETE FROM book WHERE id = $1", [id])
+        .then((results) => {
+            console.log(`In Book Table, Rows after deleting element with id =${id},the rows are ==> ${results.rows}`);
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(200).send(`Book Deleted Successfully With Id=${id}`);
+    // res.end();
+});
+//Delete a book RECORD WITH GIVEN ID
+
+// ########################################################################################
+// ########################################################################################
+// ##################################### TABLE @ book ##################################
+// #############################Developed By: Muhammad-Bilal-7896##########################
+// ########################################################################################
+
+
 //////////////////////////////////////HERE THE API ENDS////////////////////////////////////
 
 app.listen(port, () => {
