@@ -8,6 +8,15 @@ const port = 8080;
 app.use(cors());
 app.use(express.json()); //req.body
 
+////////////////////////////////////HERE THE API STARTS////////////////////////////////////
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ TABLE @ TODO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@Developed By: Muhammad-Bilal-7896@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//Get All the Data from the Database @Tested
 app.get("/todo", async (req, res) => {
     const todo = await pool.
         query("SELECT * FROM todo ORDER BY id ASC")
@@ -18,8 +27,9 @@ app.get("/todo", async (req, res) => {
         });
     res.status(200).json(todo);
 });
+//Get All the Data from the Database @Tested
 
-//get a particular todo with given id
+//get a particular todo with given id @Tested
 app.get("/todo/:id", async (req, res) => {
     const id = req.params.id;
     const todo = await pool
@@ -37,7 +47,7 @@ app.get("/todo/:id", async (req, res) => {
         res.status(404).json({ message: "Todo Not Found" });
     }
 });
-//get a particular todo with given id
+//get a particular todo with given id @Tested
 
 //Post A Todo
 app.post("/todo", async (req, res) => {
@@ -53,9 +63,9 @@ app.post("/todo", async (req, res) => {
     res.status(201).send(`Todo Added Successfully`);
     res.end();
 });
-//Post A Todo
+//Post A Todo @Tested
 
-//Update A Todo With A Given Id
+//Update A Todo With A Given Id @Tested
 app.put("/todo/:id", async (req, res) => {
     const id = req.params.id;
     const { title, description, completed } = req.body;
@@ -71,7 +81,7 @@ app.put("/todo/:id", async (req, res) => {
     res.status(200).send(`Todo Updated Successfully With Id=${id}`);
     // res.end();
 });
-//Update A Todo With A Given Id
+//Update A Todo With A Given Id @Tested
 
 //Delete A Todo
 app.delete("/todo/:id", async (req, res) => {
@@ -87,6 +97,108 @@ app.delete("/todo/:id", async (req, res) => {
     // res.end();
 });
 //Delete A Todo
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ TABLE @ todo @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@Developed By: Muhammad-Bilal-7896@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+// ########################################################################################
+// ########################################################################################
+// ##################################### TABLE @ student ##################################
+// #############################Developed By: Muhammad-Bilal-7896##########################
+// ########################################################################################
+//Get All the Data from the Database table=student @Tested
+app.get("/student", async (req, res) => {
+    const todo = await pool.
+        query("SELECT * FROM student ORDER BY id ASC")
+        .then((results) => {
+            return results.rows;
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(200).json(todo);
+});
+//Get All the Data from the Database table=student @Tested
+
+//get a particular Student with given id @Tested
+app.get("/student/:id", async (req, res) => {
+    const id = req.params.id;
+    const todo = await pool
+        .query("SELECT * FROM student WHERE id = $1", [id])
+        .then((results) => {
+            return results.rows[0];
+        }).catch(err => {
+            console.log(err);
+        });
+    console.log(`Student With Particular Id=${id} ==>`);
+    console.log(todo);
+    if (todo) {
+        res.status(200).json(todo);
+    } else {
+        res.status(404).json({ message: "Student Not Found" });
+    }
+});
+//get a particular Student with given id @Tested
+
+//Post A Student
+app.post("/student", async (req, res) => {
+    const { first_name, last_name, profile_picture } = req.body;
+    const todo = await pool
+        .query("INSERT INTO student (first_name, last_name, profile_picture) VALUES ($1, $2, $3) RETURNING *", //RETURNING * is used to return the inserted row
+            [first_name, last_name, profile_picture])
+        .then((results) => {
+            return results.rows;
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(201).send(`Student Added Successfully with Name=${first_name}${last_name}`);
+    res.end();
+});
+//Post A Student @Tested
+
+//Update A Student With A Given Id @Tested
+app.put("/student/:id", async (req, res) => {
+    const id = req.params.id;
+    const { first_name, last_name, profile_picture } = req.body;
+    const student = await pool
+        .query("UPDATE todo SET first_name = $1, last_name = $2, profile_picture = $3 WHERE id = $4 RETURNING *",
+            [first_name, last_name, profile_picture, id])
+        .then((results) => {
+            console.log(`After Updating Student with id=${id}`, results.rows);
+        }
+        ).catch(err => {
+            console.log(err);
+        });
+    res.status(200).send(`Student Updated Successfully With Id=${id}`);
+    // res.end();
+});
+//Update A Student With A Given Id @Tested
+
+//Delete A Student
+app.delete("/student/:id", async (req, res) => {
+    const id = req.params.id;
+    const todo = await pool
+        .query("DELETE FROM student WHERE id = $1", [id])
+        .then((results) => {
+            console.log(`In Student Table, Rows after deleting element with id =${id},the rows are ==> ${results.rows}`);
+        }).catch(err => {
+            console.log(err);
+        });
+    res.status(200).send(`Student Deleted Successfully With Id=${id}`);
+    // res.end();
+});
+//Delete A Student
+// ########################################################################################
+// ########################################################################################
+// ##################################### TABLE @ student ##################################
+// #############################Developed By: Muhammad-Bilal-7896##########################
+// ########################################################################################
+
+//////////////////////////////////////HERE THE API ENDS////////////////////////////////////
 
 app.listen(port, () => {
     console.log(`PostgresSQL backend server has started on port ${port}`);
