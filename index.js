@@ -66,35 +66,38 @@ app.post("/todo", async (req, res) => {
 //Post A Todo @Tested
 
 //Update A Todo With A Given Id @Tested
-app.put("/todo/:id", async (req, res) => {
+app.put("/todo/:id", (req, res) => {
     const id = req.params.id;
     const { title, description, completed } = req.body;
-    const todo = await pool
+    const todo = pool
         .query("UPDATE todo SET title = $1, description = $2, completed = $3 WHERE id = $4 RETURNING *",
-            [title, description, completed, id])
-        .then((results) => {
-            console.log(results.rows);
-        }
-        ).catch(err => {
-            console.log(err);
-        });
-    res.status(200).send(`Todo Updated Successfully With Id=${id}`);
-    // res.end();
+            [title, description, completed, id],
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log("After Updating Todo The result is :", results.rows);
+                }
+                res.status(200).send(`Todo Updated Successfully With Id=${id}`);
+                // res.end();
+            })
 });
 //Update A Todo With A Given Id @Tested
 
 //Delete A Todo
-app.delete("/todo/:id", async (req, res) => {
+app.delete("/todo/:id", (req, res) => {
     const id = req.params.id;
-    const todo = await pool
-        .query("DELETE FROM todo WHERE id = $1", [id])
-        .then((results) => {
-            console.log(`Rows after deleting element with id =${id},the rows are ==> ${results.rows}`);
-        }).catch(err => {
-            console.log(err);
-        });
-    res.status(200).send(`Todo Deleted Successfully With Id=${id}`);
-    // res.end();
+    const todo = pool
+        .query("DELETE FROM todo WHERE id = $1", [id],
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log("After Deleting Todo The result is :", results.rows);
+                }
+                res.status(200).send(`Todo Deleted Successfully With Id=${id}`);
+                // res.end();
+            });
 });
 //Delete A Todo
 
@@ -166,15 +169,17 @@ app.put("/student/:id", async (req, res) => {
     const { first_name, last_name, profile_picture } = req.body;
     const student = await pool
         .query("UPDATE todo SET first_name = $1, last_name = $2, profile_picture = $3 WHERE id = $4 RETURNING *",
-            [first_name, last_name, profile_picture, id])
-        .then((results) => {
-            console.log(`After Updating Student with id=${id}`, results.rows);
-        }
-        ).catch(err => {
-            console.log(err);
-        });
-    res.status(200).send(`Student Updated Successfully With Id=${id}`);
-    // res.end();
+            [first_name, last_name, profile_picture, id],
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log("After Updating Student The result is :", results.rows);
+                }
+                // console.log(`After Updating Student with id=${id}`, results.rows);
+                res.status(200).send(`Student Updated Successfully With Id=${id}`);
+                // res.end();
+            });
 });
 //Update A Student With A Given Id @Tested
 
@@ -182,14 +187,16 @@ app.put("/student/:id", async (req, res) => {
 app.delete("/student/:id", async (req, res) => {
     const id = req.params.id;
     const todo = await pool
-        .query("DELETE FROM student WHERE id = $1", [id])
-        .then((results) => {
-            console.log(`In Student Table, Rows after deleting element with id =${id},the rows are ==> ${results.rows}`);
-        }).catch(err => {
-            console.log(err);
-        });
-    res.status(200).send(`Student Deleted Successfully With Id=${id}`);
-    // res.end();
+        .query("DELETE FROM student WHERE id = $1", [id],
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log("After Deleting Student The result is :", results.rows);
+                }
+                res.status(200).send(`Student Deleted Successfully With Id=${id}`);
+                // res.end();
+            });
 });
 //Delete A Student
 // ########################################################################################
@@ -258,15 +265,17 @@ app.put("/book/:id", async (req, res) => {
     const id = req.params.id;
     const { book_name, author, borrowed_by, borrowed_date, return_date } = req.body;
     const book = await pool
-        .query("UPDATE todo SET book_name = $1, author = $2, borrowed_by = $3, borrowed_date = $4, return_date = $5 WHERE id = $6 RETURNING *",
-            [book_name, author, borrowed_by, borrowed_date, return_date, id])
-        .then((results) => {
-            console.log(`After Updating Book with id=${id}`, results.rows);
-        }).catch(err => {
-            console.log(err);
-        });
-    res.status(200).send(`Book Updated Successfully With Id=${id}`);
-    // res.end();
+        .query("UPDATE book SET book_name = $1, author = $2, borrowed_by = $3, borrowed_date = $4, return_date = $5 WHERE id = $6 RETURNING *",
+            [book_name, author, borrowed_by, borrowed_date, return_date, id],
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(`After Updating Book with id=${id}`, results.rows);
+                }
+                res.status(200).send(`Book Updated Successfully With Id=${id}`);
+                // res.end();
+            });
 });
 //Update a book data with a specify id
 
@@ -274,14 +283,16 @@ app.put("/book/:id", async (req, res) => {
 app.delete("/book/:id", async (req, res) => {
     const id = req.params.id;
     const book = await pool
-        .query("DELETE FROM book WHERE id = $1", [id])
-        .then((results) => {
-            console.log(`In Book Table, Rows after deleting element with id =${id},the rows are ==> ${results.rows}`);
-        }).catch(err => {
-            console.log(err);
-        });
-    res.status(200).send(`Book Deleted Successfully With Id=${id}`);
-    // res.end();
+        .query("DELETE FROM book WHERE id = $1", [id],
+            (error, results) => {
+                if (error) {
+                    throw error;
+                } else {
+                    console.log(`After Deleting Book with id=${id}`, results.rows);
+                }
+                res.status(200).send(`Book Deleted Successfully With Id=${id}`);
+                // res.end();
+            });
 });
 //Delete a book RECORD WITH GIVEN ID
 
