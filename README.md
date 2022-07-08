@@ -1,6 +1,5 @@
 # 🏁 Getting Started with the BackEndPernBookInfo API 
 
-
 ## 🤔 What is the BackEndPernBookInfo API? 
 It is the API that allows you to fetch,update,delete and perform CRUD operations for the PostgreeSQL database used in the project.This is a Restful API for the PostgreeSQL Database so that it can be used with the backend.It is basically used at the front end of Book Info App
 
@@ -11,7 +10,6 @@ It is the API that allows you to fetch,update,delete and perform CRUD operations
 - [PostgreeSQL](https://www.postgresql.org/)
 
 ## 🧐 Operations that can be performed on the BackEndPernBookInfo API
-
 It performs the following operations for both tables **student** and **book**:
 - **GET** — an HTTP request to Read (Used to read an existing resource)
 - **POST** — an HTTP request to Create (Used to create and add a resource)
@@ -20,88 +18,87 @@ It performs the following operations for both tables **student** and **book**:
 - **DELETE** — HTTP request to Delete (Used to delete an entire resource)
 
 ## 🪀 API Routes
-### 1. The API has the following routes for student table crud:
-- **GET [http://localhost:8080/student](http://localhost:8080/student)** — returns a list of all students
-- **GET [http://localhost:8080/student/id](http://localhost:8080/student/id)** — returns a list of a single student by provided id
-- **POST [http://localhost:8080/student/](http://localhost:8080/student)** — to Post a JSON object to create a new student
-- **PUT [http://localhost:8080/student/id](http://localhost:8080/student/id)** — to Update a student by provided id 
-- **DELETE [http://localhost:8080/student/id](http://localhost:8080/student/id)** — to Delete a student by provided id
+  ### 1. The API has the following routes for student table crud:
+  - **GET [http://localhost:8080/student](http://localhost:8080/student)** — returns a list of all students
+  - **GET [http://localhost:8080/student/id](http://localhost:8080/student/id)** — returns a list of a single student by provided id
+  - **POST [http://localhost:8080/student/](http://localhost:8080/student)** — to Post a JSON object to create a new student
+  - **PUT [http://localhost:8080/student/id](http://localhost:8080/student/id)** — to Update a student by provided id 
+  - **DELETE [http://localhost:8080/student/id](http://localhost:8080/student/id)** — to Delete a student by provided id
 
-### 2. The API has the following routes for **book** table crud:
-- **GET [http://localhost:8080/book](http://localhost:8080/book)** — returns a list of all books
-- **GET [http://localhost:8080/book/id](http://localhost:8080/book/id)** — returns a list of a single book by provided id
-- **POST [http://localhost:8080/book/](http://localhost:8080/book)** — to Post a JSON object to create a new book
-- **PUT [http://localhost:8080/book/id](http://localhost:8080/book/id)** — to Update a book by provided id 
-- **DELETE [http://localhost:8080/book/id](http://localhost:8080/book/id)** — to Delete a book by provided id
+  ### 2. The API has the following routes for **book** table crud:
+  - **GET [http://localhost:8080/book](http://localhost:8080/book)** — returns a list of all books
+  - **GET [http://localhost:8080/book/id](http://localhost:8080/book/id)** — returns a list of a single book by provided id
+  - **POST [http://localhost:8080/book/](http://localhost:8080/book)** — to Post a JSON object to create a new book
+  - **PUT [http://localhost:8080/book/id](http://localhost:8080/book/id)** — to Update a book by provided id  
+  - **DELETE [http://localhost:8080/book/id](http://localhost:8080/book/id)** — to Delete a book by provided id
 
 ## 🖥️ How do I use the BackEndPernBookInfo API?
+- **IMPORTANT**:Remember that the backend will never run until you have postgresql  installed on your system.
 
-- **IMPORTANT**:Remember that the backend will never run until you have postgresql installed on your system.
-
-So for getting started you need to have a [PostgreeSQL](https://www.postgresql.org/) database installed on your system.
+ So for getting started you need to have a [PostgreeSQL](https://www.postgresql.org/) database installed on your system.
 
 ## Installing PostgreeSQL
-To Download PostgreeSQL you can go to their downloads page here : [https://www.postgresql.org/download/](https://www.postgresql.org/download/).You also need to Remember that you need to create database in my case I have used **my_database** so that we can create tables in it.So lets get started.
+  To Download PostgreeSQL you can go to their downloads page here : [https://www.postgresql.org/download/](https://www.postgresql.org/download/).You also need to Remember that you need to create database in my case I have used **my_database** so that we can create tables in it.So lets get started.
 
 ## Check if PostgreeSQL is installed on your system
-- **Note** that you need to set the environment variables for your postgresql installation location after it is installed.
-- To check if PostgreeSQL is installed properly on your system or not run the following command in cmd or terminal
-```bash
-psql --version
-```
-It will return you the version of PostgreeSQL installed on your system if installed properly if you dont know how to set the environment variables for postgresql check out this resource.
-[Setting the environment variable for postgresql](https://stackoverflow.com/a/22921860/13161180)
+  - **Note** that you need to set the environment variables for your postgresql installation location after it is installed.
+  - To check if PostgreeSQL is installed properly on your system or not run the following command in cmd or terminal
+  ```bash
+  psql --version
+  ```
+  It will return you the version of PostgreeSQL installed on your system if installed properly if you dont know how to set the environment variables for postgresql check out this resource.
+  [Setting the environment variable for postgresql](https://stackoverflow.com/a/22921860/13161180)
 
 ## Creating The database
-- Database can be created from command line or from GUI i.e on [pgAdmin](https://www.pgadmin.org/).It will be installed when you install postgresql on your windows system.
-- We will create our database from command line.So after verifying our database is installed and is working in our system.Lets create it but before that we need to create a user because super user is a user who has access and full access to all operations to postgresql which could be dangerous so that is the reason we need to create a user role. So lets do it.
-### Creating a user role
-- To access PostgreSQL from the terminal, use the command psql with the option -d to select the database you want to access and -U to select the user. If the terminal replies that the psql command is not found, you’ll most likely need to add the Postgres bin/ and lib/ directories into your system path.
-```bash
-psql -d postgres -U postgres
-```
-- You will be asked to input your password. Use the password you created earlier. Once you’re logged in, create a new user by adding a login permission with the password **root**.
-```bash
-CREATE ROLE my_user WITH LOGIN PASSWORD 'root';
-```
-- A user is simply a role that has login permission. Now that you have one, give it permission to create databases by issuing the *ALTER ROLE [role name] CREATEDB syntax*.
-```
-ALTER ROLE my_user CREATEDB;
-```
-- Log out from your postgres superuser and log in as my_user using the command \q.
-```
-psql -d postgres -U my_user 
-```
-Now our user named **my_user** has been created successfully.Its time to create our database
-### Creating Database
-- To create our database run the following command.Note you should be logged in as user role under which you want to create database and I assume you to be logged in as user named **my_user** that we just created not super user otherwise you might run a command and destroy your core postgres may be It was just for fun but keep attention about that.
-```
-CREATE DATABASE my_database;
-```
-With that our database my_database is successfully created.
+  - Database can be created from command line or from GUI i.e on [pgAdmin](https://www.pgadmin.org/).It will be installed when you install postgresql on your windows system.
+  - We will create our database from command line.So after verifying our database is installed and is working in our system.Lets create it but before that we need to create a user because super user is a user who has access and full access to all operations to postgresql which could be dangerous so that is the reason we need to create a user role. So lets do it.
+  ### Creating a user role
+  - To access PostgreSQL from the terminal, use the command psql with the option -d to select the database you want to access and -U to select the user. If the terminal replies that the psql command is not found, you’ll most likely need to add the Postgres bin/ and lib/ directories into your system path.
+  ```bash
+  psql -d postgres -U postgres
+  ```
+  - You will be asked to input your password. Use the password you created earlier. Once you’re logged in, create a new user by adding a login permission with the password **root**.
+  ```bash
+  CREATE ROLE my_user WITH LOGIN PASSWORD 'root';
+  ```
+  - A user is simply a role that has login permission. Now that you have one, give it  permission to create databases by issuing the *ALTER ROLE [role name] CREATEDB syntax*.
+  ```
+  ALTER ROLE my_user CREATEDB;
+  ```
+  - Log out from your postgres superuser and log in as my_user using the command \q.
+  ```
+  psql -d postgres -U my_user 
+  ```
+  Now our user named **my_user** has been created successfully.Its time to create our    database
+  ### Creating Database
+  - To create our database run the following command.Note you should be logged in as user  role under which you want to create database and I assume you to be logged in as user named **my_user** that we just created not super user otherwise you might run a command and destroy your core postgres may be It was just for fun but keep attention about that.
+  ```bash
+  CREATE DATABASE my_database;
+  ```
+  With that our database my_database is successfully created.
 
 ## Creating Tables with KnexJS in our database.
-Now before we start the project its very much important that we understand the process of creating tables and table schemas using knexjs. So to get started you need to run these commands in the root of the project and follow what I say,
+  Now before we start the project its very much important that we understand the process of creating tables and table schemas using knexjs. So to get started you need to run these commands in the root of the project and follow what I say,
 - So there are 2 tables used throughout the backend. These are 
 - 1) book 
 - 2) student
 - Now to create the schema and tables we will simply use the [knexjs](http://knexjs.org/)
-- Its a great tool for managing tables creation and shema management and working with the databases.
+- Its a great tool for managing tables creation and shema management and working with the  databases.
 - Now to created the tables we have to intiliaze knexJS in our project wit the command
-```bash
-npx knex init 
-#  You dont need to run this command Remember because I have provided you with knex js file configured for you.If you wanna try this you have to delete that file knexfile.js and create your configuration so for now just follow me
-```
+  ```bash
+  npx knex init 
+  #  You dont need to run this command Remember because I have provided you with knex js file configured for you.If you wanna try this you have to delete that file knexfile.js and create your configuration so for now just follow me
+  ```
 **Note:**
-You dont need to run this command Remember because I have provided you with knex js file configured for you.If you wanna try this you have to delete that file knexfile.js and create your configuration so for now just follow me
+  You dont need to run this command Remember because I have provided you with knex js file configured for you.If you wanna try this you have to delete that file knexfile.js and create your configuration so for now just follow me
 - Although if you delete knexfile.js and want to create a new one enter the following code in knexfile.js
-```jsx
-// Update with your config settings.
-/**
- * @type { Object.<string, import("knex").Knex.Config> }
- */
-module.exports = {
-  development: {
+  ```jsx
+  // Update with your config settings.
+  /**
+  * @type { Object.<string, import("knex").Knex.Config> }
+  */
+  module.exports = {
+   development: {
     client: 'pg',
     connection: {
       host:"localhost",
@@ -126,39 +123,39 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }
-};
-```
-- Now lets start migrating. To migrate the database or create table in database, the command to start migration and create table is 
-`npx knex migrate:make create_[YourTableNameHere]_table`
-So Remember we have to create two tables so first we will create 
-**student** table
-```
-npx knex migrate:make create_student_table
-```
-You will see that a folder called **migrations** and this will be the location of your Student table’s first migration and all the future migrations for the table.
+  };
+  ```
+- Now lets start migrating. To migrate the database or create table in database, the       command to start migration and create table is 
+  `npx knex migrate:make create_[YourTableNameHere]_table`
+  So Remember we have to create two tables so first we will create 
+  *student** table
+  ```bash
+  npx knex migrate:make create_student_table
+  ```
+  You will see that a folder called **migrations** and this will be the location of your   Student table’s first migration and all the future migrations for the table.
 - Now paste the following code in your first migration
-```jsx
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-exports.up = function (knex) {
+  ```jsx
+  /**
+   * @param { import("knex").Knex } knex
+   * @returns { Promise<void> }
+   */
+  exports.up = function (knex) {
     return knex.schema.createTable('student', (table) => {
         table.increments('id')
         table.string('first_name').notNullable();
         table.string('last_name').notNullable();
         table.string('profile_picture');
     });
-};
+  };
 
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-exports.down = function (knex) {
+  /**
+  * @param { import("knex").Knex } knex
+  * @returns { Promise<void> }
+  */
+  exports.down = function (knex) {
     return knex.schema.dropTable('student');
-};
-```
+  };
+  ```
 - Now lets send some data using seed file and it will populate our student table
   ```
   npx knex seed:make 01_seed
