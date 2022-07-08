@@ -259,3 +259,9 @@ It performs the following operations for both tables **student** and **book**:
 ## Find Me 
 - Follow me on [Linkedin](https://www.linkedin.com/in/muhammad-bilal-028843199/) for useful updates regarding development
 - My [Github Profile](https://github.com/Muhammad-Bilal-7896) 
+
+## Resources
+Blogs are much faster than videos so I mostly consult blogs but you can consult video tutorials if you want to
+- [https://blog.logrocket.com/getting-started-with-postgres-in-your-react-app/](https://blog.logrocket.com/getting-started-with-postgres-in-your-react-app/)
+- [https://medium.com/@yasirahboyce/node-express-knex-postgresql-22e10daf0817](https://medium.com/@yasirahboyce/node-express-knex-postgresql-22e10daf0817)
+- [https://youtu.be/J01rYl9T3BU](https://youtu.be/J01rYl9T3BU)
