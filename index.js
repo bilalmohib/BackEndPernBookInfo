@@ -16,90 +16,90 @@ app.use(express.json()); //req.body
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@Developed By: Muhammad-Bilal-7896@@@@@@@@@@@@@@@@@@@@@@@@@@
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//Get All the Data from the Database @Tested
-app.get("/todo", async (req, res) => {
-    const todo = await pool.
-        query("SELECT * FROM todo ORDER BY id ASC")
-        .then((results) => {
-            return results.rows;
-        }).catch(err => {
-            console.log(err);
-        });
-    res.status(200).json(todo);
-});
-//Get All the Data from the Database @Tested
+// //Get All the Data from the Database @Tested
+// app.get("/todo", async (req, res) => {
+//     const todo = await pool.
+//         query("SELECT * FROM todo ORDER BY id ASC")
+//         .then((results) => {
+//             return results.rows;
+//         }).catch(err => {
+//             console.log(err);
+//         });
+//     res.status(200).json(todo);
+// });
+// //Get All the Data from the Database @Tested
 
-//get a particular todo with given id @Tested
-app.get("/todo/:id", async (req, res) => {
-    const id = req.params.id;
-    const todo = await pool
-        .query("SELECT * FROM todo WHERE id = $1", [id])
-        .then((results) => {
-            return results.rows[0];
-        }).catch(err => {
-            console.log(err);
-        });
-    console.log(`Todo With Particular Id=${id} ==>`);
-    console.log(todo);
-    if (todo) {
-        res.status(200).json(todo);
-    } else {
-        res.status(404).json({ message: "Todo Not Found" });
-    }
-});
-//get a particular todo with given id @Tested
+// //get a particular todo with given id @Tested
+// app.get("/todo/:id", async (req, res) => {
+//     const id = req.params.id;
+//     const todo = await pool
+//         .query("SELECT * FROM todo WHERE id = $1", [id])
+//         .then((results) => {
+//             return results.rows[0];
+//         }).catch(err => {
+//             console.log(err);
+//         });
+//     console.log(`Todo With Particular Id=${id} ==>`);
+//     console.log(todo);
+//     if (todo) {
+//         res.status(200).json(todo);
+//     } else {
+//         res.status(404).json({ message: "Todo Not Found" });
+//     }
+// });
+// //get a particular todo with given id @Tested
 
-//Post A Todo
-app.post("/todo", async (req, res) => {
-    const { title, description, completed } = req.body;
-    const todo = await pool
-        .query("INSERT INTO todo (title, description, completed) VALUES ($1, $2, $3) RETURNING *", //RETURNING * is used to return the inserted row
-            [title, description, completed])
-        .then((results) => {
-            return results.rows;
-        }).catch(err => {
-            console.log(err);
-        });
-    res.status(201).send(`Todo Added Successfully`);
-    res.end();
-});
-//Post A Todo @Tested
+// //Post A Todo
+// app.post("/todo", async (req, res) => {
+//     const { title, description, completed } = req.body;
+//     const todo = await pool
+//         .query("INSERT INTO todo (title, description, completed) VALUES ($1, $2, $3) RETURNING *", //RETURNING * is used to return the inserted row
+//             [title, description, completed])
+//         .then((results) => {
+//             return results.rows;
+//         }).catch(err => {
+//             console.log(err);
+//         });
+//     res.status(201).send(`Todo Added Successfully`);
+//     res.end();
+// });
+// //Post A Todo @Tested
 
-//Update A Todo With A Given Id @Tested
-app.put("/todo/:id", (req, res) => {
-    const id = req.params.id;
-    const { title, description, completed } = req.body;
-    const todo = pool
-        .query("UPDATE todo SET title = $1, description = $2, completed = $3 WHERE id = $4 RETURNING *",
-            [title, description, completed, id],
-            (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log("After Updating Todo The result is :", results.rows);
-                }
-                res.status(200).send(`Todo Updated Successfully With Id=${id}`);
-                // res.end();
-            })
-});
-//Update A Todo With A Given Id @Tested
+// //Update A Todo With A Given Id @Tested
+// app.put("/todo/:id", (req, res) => {
+//     const id = req.params.id;
+//     const { title, description, completed } = req.body;
+//     const todo = pool
+//         .query("UPDATE todo SET title = $1, description = $2, completed = $3 WHERE id = $4 RETURNING *",
+//             [title, description, completed, id],
+//             (error, results) => {
+//                 if (error) {
+//                     throw error;
+//                 } else {
+//                     console.log("After Updating Todo The result is :", results.rows);
+//                 }
+//                 res.status(200).send(`Todo Updated Successfully With Id=${id}`);
+//                 // res.end();
+//             })
+// });
+// //Update A Todo With A Given Id @Tested
 
-//Delete A Todo
-app.delete("/todo/:id", (req, res) => {
-    const id = req.params.id;
-    const todo = pool
-        .query("DELETE FROM todo WHERE id = $1", [id],
-            (error, results) => {
-                if (error) {
-                    throw error;
-                } else {
-                    console.log("After Deleting Todo The result is :", results.rows);
-                }
-                res.status(200).send(`Todo Deleted Successfully With Id=${id}`);
-                // res.end();
-            });
-});
-//Delete A Todo
+// //Delete A Todo
+// app.delete("/todo/:id", (req, res) => {
+//     const id = req.params.id;
+//     const todo = pool
+//         .query("DELETE FROM todo WHERE id = $1", [id],
+//             (error, results) => {
+//                 if (error) {
+//                     throw error;
+//                 } else {
+//                     console.log("After Deleting Todo The result is :", results.rows);
+//                 }
+//                 res.status(200).send(`Todo Deleted Successfully With Id=${id}`);
+//                 // res.end();
+//             });
+// });
+// //Delete A Todo
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -212,7 +212,7 @@ app.delete("/student/:id", async (req, res) => {
 // #############################Developed By: Muhammad-Bilal-7896##########################
 // ########################################################################################
 
-//To get all data from book table
+//To get all data from book table @Tested
 app.get("/book", async (req, res) => {
     const book = await pool.
         query("SELECT * FROM book ORDER BY id ASC")
@@ -223,8 +223,8 @@ app.get("/book", async (req, res) => {
         });
     res.status(200).json(book);
 });
-
-//To get specific book with given id
+ 
+//To get specific book with given id @Tested
 app.get("/book/:id", async (req, res) => {
     const id = req.params.id;
     const book = await pool
@@ -242,9 +242,9 @@ app.get("/book/:id", async (req, res) => {
         res.status(404).json({ message: "Book Not Found" });
     }
 });
-//To get specific book with given id
+//To get specific book with given id @Tested
 
-//To post a book data
+//To post a book data @Tested
 app.post("/book", async (req, res) => {
     const { book_name, author, borrowed_by, borrowed_date, return_date } = req.body;
     const book = await pool
@@ -258,9 +258,9 @@ app.post("/book", async (req, res) => {
     res.status(201).send(`Book Added Successfully with Name=${book_name}`);
     res.end();
 });
-//To post a book data
+//To post a book data @Tested
 
-//Update a book data with a specify id
+//Update a book data with a specify id @Tested
 app.put("/book/:id", async (req, res) => {
     const id = req.params.id;
     const { book_name, author, borrowed_by, borrowed_date, return_date } = req.body;
@@ -277,9 +277,9 @@ app.put("/book/:id", async (req, res) => {
                 // res.end();
             });
 });
-//Update a book data with a specify id
+//Update a book data with a specify id @Tested
 
-//Delete a book RECORD WITH GIVEN ID
+//Delete a book RECORD WITH GIVEN ID @Tested
 app.delete("/book/:id", async (req, res) => {
     const id = req.params.id;
     const book = await pool
@@ -294,7 +294,7 @@ app.delete("/book/:id", async (req, res) => {
                 // res.end();
             });
 });
-//Delete a book RECORD WITH GIVEN ID
+//Delete a book RECORD WITH GIVEN ID @Tested
 
 // ########################################################################################
 // ########################################################################################
