@@ -168,7 +168,7 @@ app.put("/student/:id", async (req, res) => {
     const id = req.params.id;
     const { first_name, last_name, profile_picture } = req.body;
     const student = await pool
-        .query("UPDATE todo SET first_name = $1, last_name = $2, profile_picture = $3 WHERE id = $4 RETURNING *",
+        .query("UPDATE student SET first_name = $1, last_name = $2, profile_picture = $3 WHERE id = $4 RETURNING *",
             [first_name, last_name, profile_picture, id],
             (error, results) => {
                 if (error) {
@@ -183,7 +183,7 @@ app.put("/student/:id", async (req, res) => {
 });
 //Update A Student With A Given Id @Tested
 
-//Delete A Student
+//Delete A Student @Tested
 app.delete("/student/:id", async (req, res) => {
     const id = req.params.id;
     const todo = await pool
@@ -198,7 +198,7 @@ app.delete("/student/:id", async (req, res) => {
                 // res.end();
             });
 });
-//Delete A Student
+//Delete A Student @Tested
 // ########################################################################################
 // ########################################################################################
 // ##################################### TABLE @ student ##################################
